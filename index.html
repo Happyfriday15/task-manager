@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Shot — Work. Shoot. Reward.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient-glow glow-one"></div>
+    <div class="ambient-glow glow-two"></div>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Task Shot home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span>TASK<span class="brand-accent">SHOT</span></span>
+        </a>
+        <div class="topbar-meta">
+          <div class="streak"><span class="flame">✦</span><span><b id="streak-count">03</b> day streak</span></div>
+          <div class="coin-badge"><span class="coin">●</span><span id="coin-count">120</span><small>TASK PTS</small></div>
+          <button class="icon-button" id="reset-button" title="Reset demo progress" aria-label="Reset demo progress">↻</button>
+        </div>
+      </header>
+
+      <section class="hero" id="top">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span>PRODUCTIVITY, WITH A PRIZE</p>
+          <h1>Do the work.<br /><em>Take the shot.</em></h1>
+          <p class="hero-copy">Every finished task buys you five chances at the arcade. Stack small wins into a high score.</p>
+        </div>
+        <div class="hero-ticket" aria-label="Each task unlocks five shots">
+          <div class="ticket-top"><span>YOUR REWARD</span><span>01 / 05</span></div>
+          <div class="ticket-main"><strong>5</strong><span>SHOTS<br />PER TASK</span></div>
+          <div class="ticket-bottom"><span class="barcode">|||| ||| |||| | ||</span><span>PLAY TO WIN</span></div>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="panel tasks-panel">
+          <div class="panel-heading">
+            <div><p class="section-label">01 / YOUR QUEUE</p><h2>Mission control</h2></div>
+            <span class="task-count" id="task-count">2 open</span>
+          </div>
+          <form class="task-form" id="task-form">
+            <input id="task-input" type="text" maxlength="60" placeholder="What needs doing?" autocomplete="off" />
+            <button type="submit" class="add-button"><span>+</span> Add task</button>
+          </form>
+          <div class="task-list" id="task-list"></div>
+          <div class="queue-footer"><span class="mini-dot"></span><span id="queue-message">Finish a task to power up the court.</span></div>
+        </section>
+
+        <section class="panel arcade-panel" id="arcade-panel">
+          <div class="panel-heading arcade-heading">
+            <div><p class="section-label">02 / THE PAYOUT</p><h2>Neon hoops</h2></div>
+            <div class="score-readout"><span>GAME POINTS</span><strong id="score">000</strong></div>
+          </div>
+          <div class="court" id="court" aria-label="Aim the basketball by moving your cursor over the court">
+            <div class="court-header"><span id="game-status">READY WHEN YOU ARE</span><span class="shots-left"><i id="shots-left">0</i> SHOTS LEFT</span></div>
+            <div class="aim-guide" id="aim-guide"><span class="aim-crosshair"></span><small>AIM HERE</small></div>
+            <div class="backboard"><div class="backboard-glow"></div><div class="hoop"><span class="rim"></span><span class="net"></span></div></div>
+            <div class="court-lines line-one"></div><div class="court-lines line-two"></div>
+            <div class="ball" id="ball" role="button" tabindex="0" aria-label="Press and hold the ball, then drag and release to shoot">🏀</div>
+            <div class="court-floor"><span class="floor-mark floor-mark-one"></span><span class="floor-mark floor-mark-two"></span></div>
+            <div class="result-pop" id="result-pop">+10</div>
+            <div class="start-overlay" id="start-overlay"><div class="lock-icon">▣</div><p>Complete a task<br />to unlock the court</p></div>
+          </div>
+          <div class="arcade-controls">
+            <div class="shot-progress" id="shot-progress"><span></span><span></span><span></span><span></span><span></span></div>
+            <span class="hold-instruction">GRAB + DRAG + RELEASE</span>
+          </div>
+          <p class="game-hint" id="game-hint">Press and hold the ball, drag to aim, then release. Tight aim pays +3 / +10 swish.</p>
+        </section>
+      </div>
+
+      <section class="panel quests-panel" id="daily-quests">
+        <div class="panel-heading">
+          <div><p class="section-label">03 / COME BACK TOMORROW</p><h2>Daily quests</h2></div>
+          <span class="quest-date" id="quest-date">TODAY</span>
+        </div>
+        <p class="shop-copy">Three small missions reset every day. Finish them all for a serious points boost.</p>
+        <div class="quest-list" id="quest-list"></div>
+      </section>
+
+      <section class="panel shop-panel" id="shop">
+        <div class="panel-heading shop-heading">
+          <div><p class="section-label">04 / PRIZE COUNTER</p><h2>Ball locker</h2></div>
+          <div class="shop-balance"><span class="coin">●</span><strong id="shop-points">000</strong><small>GAME POINTS TO SPEND</small></div>
+        </div>
+        <p class="shop-copy">Make baskets to earn game points, then trade them for a new look. Your equipped ball follows you into every round.</p>
+        <div class="ball-shop" id="ball-shop"></div>
+      </section>
+
+      <section class="bottom-strip">
+        <div class="strip-stat"><span class="stat-icon">↗</span><div><b id="total-score">000</b><small>ALL-TIME GAME PTS</small></div></div>
+        <div class="strip-rule"></div>
+        <div class="strip-stat"><span class="stat-icon pink">★</span><div><b id="tasks-done">0</b><small>TASKS CLEARED</small></div></div>
+        <div class="strip-rule"></div>
+        <div class="strip-quote">“Small wins are still wins.” <span>— arcade wisdom</span></div>
+      </section>
+
+      <footer><span>TASKSHOT ARCADE / EST. TODAY</span><span>NO DEADLINES. JUST HIGH SCORES.</span></footer>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
