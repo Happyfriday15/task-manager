@@ -86,13 +86,20 @@ function renderTasks() {
   tasks.forEach(task => {
     const item = document.createElement('div');
     item.className = `task-item ${task.done ? 'done' : ''} ${activeTaskId === task.id ? 'active' : ''}`;
-    item.innerHTML = `<span class="task-title">${escapeHtml(task.title)}</span><span class="task-state">${task.done ? 'cleared' : 'queued'}</span><button class="complete-task" data-id="${task.id}">${task.done ? 'Done' : 'Finish +5'}</button>`;
+    item.innerHTML = `<span class="task-title">${escapeHtml(task.title)}</span><span class="task-state">${task.done ? 'cleared' : 'queued'}</span><button class="complete-task" data-id="${task.id}">${task.done ? 'Done' : 'Finish +5'}</button><button class="delete-task" data-delete-id="${task.id}" aria-label="Delete ${escapeHtml(task.title)}">×</button>`;
     taskList.appendChild(item);
   });
   taskList.querySelectorAll('.complete-task').forEach(button => button.addEventListener('click', () => finishTask(Number(button.dataset.id))));
+  taskList.querySelectorAll('.delete-task').forEach(button => button.addEventListener('click', () => deleteTask(Number(button.dataset.deleteId))));
 }
 
 function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+function deleteTask(id) {
+  tasks = tasks.filter(task => task.id !== id);
+  if (activeTaskId === id) activeTaskId = null;
+  renderTasks(); persist();
+}
 
 function renderDailyQuests() {
   const date = new Date(`${daily.date}T12:00:00`);
@@ -121,6 +128,11 @@ function finishTask(id) {
   gameStatus.textContent = 'ROUND ACTIVE / GOOD LUCK'; queueMessage.textContent = `${shots} shots loaded. +10 task pts earned.`; queueMessage.previousElementSibling.style.background = 'var(--lime)';
   shotsLeftEl.textContent = shots; renderTasks(); renderDailyQuests(); updateProgress(); persist();
   if (startingNewRound) document.querySelector('#arcade-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.setTimeout(() => {
+    tasks = tasks.filter(item => item.id !== id);
+    if (activeTaskId === id) activeTaskId = null;
+    renderTasks(); persist();
+  }, 650);
 }
 
 function updateProgress() { progressBars.forEach((bar, index) => bar.classList.toggle('filled', index >= shots)); }
